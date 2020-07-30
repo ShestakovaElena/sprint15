@@ -40,7 +40,7 @@ module.exports.createUser = (req, res, next) => {
     .then((user) => res.send({
       _id: user._id, name: user.name, about: user.about, avatar: user.avatar, email: user.email,
     }))
-    .catch((err) => next(new BadRequestError(err.message)));
+    .catch((err) => ((err.name === 'ValidationError') ? res.status(400).send({ message: 'Ошибка валидации' }) : res.status(409).send({ message: 'Пользователь с такими данными уже существует' })));
 };
 
 module.exports.login = (req, res, next) => {
