@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const { celebrate, errors } = require('celebrate');
+const { celebrate, errors, Joi } = require('celebrate');
 const NotFoundError = require('./errors/not-found-err');
 const cardsRouter = require('./routes/cards');
 const usersRouter = require('./routes/users');
@@ -34,8 +34,8 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('/signin', login);
-app.post('/signup', createUser);
+app.post('/signin', loginCheck, login);
+app.post('/signup', createUserCheck, createUser);
 
 app.use('/cards', auth, cardsRouter);
 app.use('/users', auth, usersRouter);
