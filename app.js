@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+// eslint-disable-next-line no-unused-vars
 const { celebrate, errors, Joi } = require('celebrate');
 const NotFoundError = require('./errors/not-found-err');
 const cardsRouter = require('./routes/cards');
@@ -40,6 +41,7 @@ app.post('/signup', createUserCheck, createUser);
 app.use('/cards', auth, cardsRouter);
 app.use('/users', auth, usersRouter);
 
+// eslint-disable-next-line no-unused-vars
 app.use('*', (req, res) => {
   throw new NotFoundError('Запрашиваемый ресурс не найден');
 });
@@ -48,6 +50,7 @@ app.use(errorLogger);
 
 app.use(errors());
 
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
   res.status(statusCode).send({

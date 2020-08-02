@@ -29,6 +29,7 @@ module.exports.getUserById = (req, res, next) => {
     .catch(next);
 };
 
+// eslint-disable-next-line no-unused-vars
 module.exports.createUser = (req, res, next) => {
   const {
     name, about, avatar, email, password,

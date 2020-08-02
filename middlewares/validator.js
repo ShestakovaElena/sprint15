@@ -29,6 +29,12 @@ const getUserCheck = celebrate({
   }),
 });
 
+const getCardCheck = celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().required().hex().length(24),
+  }),
+});
+
 const createCardCheck = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
@@ -37,12 +43,6 @@ const createCardCheck = celebrate({
         throw new BadRequestError('Введите корректную ссылку');
       } else { return value; }
     }),
-  }),
-});
-
-const getCardCheck = celebrate({
-  body: Joi.object().keys({
-    id: Joi.string().required().hex().length(24),
   }),
 });
 
