@@ -8,6 +8,7 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 
 const NotFoundError = require('../errors/not-found-err');
 const BadRequestError = require('../errors/bad-request-err');
+const ConflictError = require('../errors/conflict_err');
 
 const User = require('../models/user');
 
@@ -41,7 +42,13 @@ module.exports.createUser = (req, res, next) => {
     .then((user) => res.send({
       _id: user._id, name: user.name, about: user.about, avatar: user.avatar, email: user.email,
     }))
-    .catch((err) => ((err.name === 'ValidationError') ? res.status(400).send({ message: 'Ошибка валидации' }) : res.status(409).send({ message: 'Пользователь с такими данными уже существует' })));
+    .catch((err) => {
+      if (err.code === 11000) {
+        // eslint-disable-next-line no-param-reassign
+        next(new ConflictError('Пользователь с такими данными уже существует'));
+      }
+      next(err);
+    });
 };
 
 module.exports.login = (req, res, next) => {
