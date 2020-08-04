@@ -46,8 +46,7 @@ module.exports.createUser = (req, res, next) => {
       if (err.code === 11000) {
         // eslint-disable-next-line no-param-reassign
         next(new ConflictError('Пользователь с такими данными уже существует'));
-      }
-      next(err);
+      } else next(err);
     });
 };
 
